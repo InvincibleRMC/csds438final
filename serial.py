@@ -3,21 +3,20 @@ import numpy as np
 N =  10000000
 
 def addVectors(v1:np.ndarray ,v2: np.ndarray):
-    return v1 + v2
+    v3: np.ndarray = np.ones(N)
+    for i in range(len(v1)):
+        v3[i] = v1[i] + v2[i]
+    return v3
 
 def main():
     ones: np.ndarray = np.ones(N)
-    print(ones)
-    print(ones.size)
     negativeONes: np.ndarray = np.ones(N)*-1
-    print(negativeONes)
-    print(negativeONes.size)
-
+    
     start = time.time()
     zeros: np.ndarray = addVectors(ones,negativeONes)
     end = time.time()
     print("Elapsed = %s" % (end - start))
-    print(zeros)
+    
 
     if(zeros.size != N):
         raise Exception("Summed Vector is Wrong Size")
