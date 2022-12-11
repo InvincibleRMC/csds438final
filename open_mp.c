@@ -27,10 +27,6 @@ int main()
     int THREAD_NUM = 4;
 
     omp_set_num_threads(THREAD_NUM);
-
-    // int th_id;
-
-    // int evenSection = N / THREAD_NUM;
     start = omp_get_wtime();
     int i;
 #pragma omp parallel shared(sum, ones, negativeOnes) private(i)
