@@ -1,8 +1,8 @@
 #include <time.h>
 #include <stdio.h>
 #include <omp.h>
-
 #define N 10000000
+// Set up
 static int ones[N];
 static int negativeOnes[N];
 static int zeros[N];
@@ -22,29 +22,30 @@ int main()
     setUp(negativeOnes, -1);
     setUp(zeros, 0);
 
-    clock_t start, end;
+    double start, end;
 
     int THREAD_NUM = 4;
 
     omp_set_num_threads(THREAD_NUM);
 
+    // int th_id;
+
+    // int evenSection = N / THREAD_NUM;
+    start = omp_get_wtime();
     int i;
-    start = clock();
 #pragma omp parallel shared(sum, ones, negativeOnes) private(i)
     {
-
 #pragma omp for
-
         for (i = 0; i < (N); i++)
         {
             sum[i] = ones[i] + negativeOnes[i];
         }
     }
+#pragma omp barrier
+    end = omp_get_wtime();
+    printf("Work took %f seconds\n", end - start);
 
-    end = clock();
-    double duration = ((double)end - start) / CLOCKS_PER_SEC;
-    printf("Time taken to execute in seconds : %f\n", duration);
-
+    // Check Summation
     for (int i = 0; i < N; i++)
     {
         if (sum[i] != zeros[i])
