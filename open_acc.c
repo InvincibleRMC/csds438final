@@ -1,7 +1,6 @@
 #include <time.h>
 #include <stdio.h>
 #include <openacc.h>
-#include <cuda.h>
 #include <omp.h>
 #define N 10000000
 
@@ -29,7 +28,7 @@ int main()
     start = omp_get_wtime();
     int i;
 
-#pragma acc kernels
+#pragma acc kernels loop
         for (i = 0; i < (N); i++)
         {
             sum[i] = ones[i] + negativeOnes[i];
